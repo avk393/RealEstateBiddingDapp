@@ -15,3 +15,7 @@ export function imageLoaded(image){
 export function listingsLoaded(listing){
   return { type: types.LISTINGS_LOADED, listing };
 }
+
+export function listingIdLoaded(listingId){
+  return { type: types.LISTING_ID_LOADED, listingId };
+}

@@ -73,6 +73,10 @@ function retrieveIpfsObject (listingURI){
     });
 }
 
+export function handleCardClick(id, dispatch){
+  dispatch(ethersActions.listingIdLoaded(id));
+}
+
 /*export function web3Loaded() {
   return function(dispatch){
     const provider = new ethers.providers.Web3Provider(window.ethereum);

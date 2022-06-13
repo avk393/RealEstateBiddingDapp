@@ -9,8 +9,8 @@ class ListingsPage extends React.Component {
     return (
       <div className="jumbotron">
         <h2>Listings</h2>
-        {this.props.listings ? 
-          <DisplayListings listings={this.props.listings.listing} /> :
+        {this.props.openListings ? 
+          <DisplayListings listings={this.props.openListings.listing} dispatch={this.props.dispatch}/> :
           <Spinner />
         }
       </div>
@@ -19,12 +19,11 @@ class ListingsPage extends React.Component {
 }
 
 
-
 function mapStateToProps(state) {
   return {
     address: state.ethers.address,
     contract: state.ethers.contract,
-    listings: state.ethers.listings
+    openListings: state.ethers.listings
   };
 }
 
