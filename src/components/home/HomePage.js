@@ -10,9 +10,9 @@ class HomePage extends React.Component {
     return (
       <div >
         <h1>Real Estate Bidding Dapp</h1>
-          <h2>Your Listings</h2>
-            {this.props.openListings&&this.props.address ? 
-              <DisplayListings listings={this.props.openListings.listing} dispatch={this.props.dispatch}/> :
+          <h2>Listings</h2>
+            {this.props.listings ? 
+              <DisplayListings listings={this.props.listings.listing} dispatch={this.props.dispatch}/> :
               <Spinner />
             }
       </div>
@@ -24,7 +24,7 @@ class HomePage extends React.Component {
 function mapStateToProps(state) {
   return {
     address: state.ethers.address,
-    openListings: state.ethers.listings
+    listings: state.ethers.listings
   };
 }
 

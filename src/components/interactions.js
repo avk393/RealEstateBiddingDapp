@@ -7,6 +7,22 @@ import BidContract from '../../artifacts/contracts/BidContract.sol/BidContract.j
 
 var signer, bidContract;
 
+const etherToWei = (n) => {
+  return ethers.BigNumber.from(
+      ethers.utils.formatUnits((n*(10e17)).toString(), 'wei')
+  )
+}
+
+const weiToEther = (n) => {
+  return n.toString()/10e17;
+}
+
+export const handleBidChange = (dispatch, text) => {
+  console.log(text);
+  dispatch(ethersActions.bidAmountChanged(text));
+}
+
+
 
 export const loadBlockchain = async (dispatch) => {
   // Fetching Etheruem provider through MetaMask
@@ -20,9 +36,15 @@ export const loadBlockchain = async (dispatch) => {
   dispatch(ethersActions.bidContractLoaded(bidContract.address));
 
   // Fetching open/closed events from contract
-  const openEvents = await bidContract.queryFilter('BidOpened');
-  //const closeEvents = await bidContract.queryFilter('BidClosed')  
-  for(const event of openEvents) {
+  const listingEvents = await bidContract.queryFilter('BidOpened');
+  const closedEvents = await bidContract.queryFilter('BidClosed');
+
+  loadListings(listingEvents, dispatch, ethersActions.listingsLoaded);
+  loadListings(closedEvents, dispatch, ethersActions.closedListingsLoaded);
+}
+
+const loadListings = async ( listingEvents, dispatch, dispatchAction ) => {
+  for(const event of listingEvents) {
     // Validating the listing URL schema
     // console.log(event);
     const listingURI = getIpfsHashFromBytes32(event.args.listingURI);
@@ -38,13 +60,9 @@ export const loadBlockchain = async (dispatch) => {
         "sqft": listingItem.sqft,
         "pictures": [...listingItem.pictures]
       };
-      dispatch(ethersActions.listingsLoaded(listing));
+      dispatch(dispatchAction(listing));
     }
   }
-}
-
-export const loadListings = async ( dispatch ) => {
-  
 }
 
 function validateListingURI (listingItem){

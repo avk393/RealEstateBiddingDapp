@@ -14,12 +14,12 @@ import { loadBlockchain, handleCardClick } from './interactions';
 import { Dimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 
-// [TODO] Script a bid and close bid
+
 // [TODO] Filter bids by my/open listings and open/closed bids
 // [TODO] Place/Close bid logic
 // [TODO] Create listing page that can post to ipfs
 // [TODO] Sort through lisitngs to show "My Listings" on home page
-// [TODO] Create subscribe to events for dynamic rendering
+// [TODO] *** Create subscribe to events for dynamic rendering ***
 
 class App extends React.Component {
   componentDidMount() {
